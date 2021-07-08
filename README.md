@@ -7,6 +7,8 @@ Initially the project was started by **yuansfu**, last updated on `Apr 6, 2013` 
 
 The development of the project is dead so here I will continue to support the code and will provide NuGet packages for easier installation.
 
+Converted to .NET Core by Brian Berns.
+
 ## Build
 
 [![Build status](https://ci.appveyor.com/api/projects/status/ts22h5vdkjej9j25?svg=true)](https://ci.appveyor.com/project/NikolayIT/rtfdomparser)
