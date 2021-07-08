@@ -255,7 +255,13 @@ namespace RtfDomParser
 				myInfo.Clear();
 				myFontTable.Clear();
 				myColorTable.Clear();
-				myFontTable.Add( System.Windows.Forms.Control.DefaultFont.Name );
+				myFontTable.Add(
+#if WINFORMS
+					System.Windows.Forms.Control.DefaultFont.Name
+#else
+					"Times New Roman"
+#endif
+					);
 			}
 			else
 			{

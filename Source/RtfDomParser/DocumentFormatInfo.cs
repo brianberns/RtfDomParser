@@ -403,7 +403,13 @@ namespace RtfDomParser
             }
         }
 
-        private string strFontName = System.Windows.Forms.Control.DefaultFont.Name;
+        private string strFontName =
+#if WINFORMS
+            System.Windows.Forms.Control.DefaultFont.Name;
+#else
+            "Times New Roman";
+#endif
+
         /// <summary>
         /// font name
         /// </summary>
@@ -801,7 +807,12 @@ namespace RtfDomParser
 
         public void ResetText()
         {
-            this.FontName = System.Windows.Forms.Control.DefaultFont.Name;
+            this.FontName =
+#if WINFORMS
+                System.Windows.Forms.Control.DefaultFont.Name;
+#else
+                "Times New Roman";
+#endif
             this.FontSize = 12;
             this.Bold = false;
             this.Italic = false;
@@ -861,7 +872,12 @@ namespace RtfDomParser
             this.SpacingBefore = 0;
             this.SpacingAfter = 0;
             this.Align = 0;
-            this.FontName = System.Windows.Forms.Control.DefaultFont.Name;
+            this.FontName =
+#if WINFORMS
+                System.Windows.Forms.Control.DefaultFont.Name;
+#else
+                "Times New Roman";
+#endif
             this.FontSize = 12;
             this.Bold = false;
             this.Italic = false;

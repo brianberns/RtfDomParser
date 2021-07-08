@@ -18,8 +18,8 @@ namespace RtfDomParser
 	/// </summary>
 	public class RTFWriter : System.IDisposable
 	{
-	
-		#region test ******************************************************
+#if WINFORMS
+#region test ******************************************************
          
 		/// <summary>
 		/// Test generate rtf file
@@ -102,7 +102,8 @@ namespace RtfDomParser
 			w.WriteEndGroup();
 		}
 
-		#endregion
+#endregion
+#endif
 
 		/// <summary>
 		/// Initialize instance
@@ -484,7 +485,7 @@ namespace RtfDomParser
 			//FixIndent();
 		}
 
-		#region internal function ******************************************************
+#region internal function ******************************************************
 
 		private void InnerWrite( char c )
 		{
@@ -530,7 +531,7 @@ namespace RtfDomParser
 			}
 		}
 
-		#endregion 
+#endregion
 
 		/// <summary>
 		/// dispose instance

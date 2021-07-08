@@ -98,7 +98,12 @@ namespace RtfDomParser
         /// <summary>
         /// default font name
         /// </summary>
-        private static string DefaultFontName = System.Windows.Forms.Control.DefaultFont.Name;
+        private static string DefaultFontName =
+#if WINFORMS
+            System.Windows.Forms.Control.DefaultFont.Name;
+#else
+            "Times New Roman";
+#endif
 
 
         private RTFFontTable myFontTable = new RTFFontTable();
@@ -2561,7 +2566,7 @@ namespace RtfDomParser
                         //        break;
                         //    }
 
-                        #region read object *********************************
+#region read object *********************************
 
                         case RTFConsts._object:
                             {
@@ -2571,9 +2576,9 @@ namespace RtfDomParser
                                 return;// finish current level
                             }
 
-                        #endregion
+#endregion
 
-                        #region read image **********************************
+#region read image **********************************
 
                         case RTFConsts._shppict :
                             // continue the following token
@@ -2709,9 +2714,9 @@ namespace RtfDomParser
                                 }
                                 break;
                             }
-                        #endregion
+#endregion
 
-                        #region read shape ************************************************
+#region read shape ************************************************
                         case RTFConsts._sp:
                             {
                                 // begin read shape property
@@ -2840,9 +2845,9 @@ namespace RtfDomParser
                             {
                                 break;
                             }
-                        #endregion
+#endregion
 
-                        #region read table ************************************************
+#region read table ************************************************
                         case RTFConsts._intbl:
                         case RTFConsts._trowd:
                         case RTFConsts._itap:
@@ -3119,7 +3124,7 @@ namespace RtfDomParser
                                 }
                                 break;
                             }
-                        #endregion
+#endregion
                         default :
                             // unsupport keyword
                             if (reader.TokenType == RTFTokenType.ExtKeyword
@@ -3199,7 +3204,7 @@ namespace RtfDomParser
             }//while
         }
 
-        #region HTML RTF 
+#region HTML RTF 
 
         
         private string _HtmlContent = null;
@@ -3299,7 +3304,7 @@ namespace RtfDomParser
             this.HtmlContent = htmlStr.ToString();
         }
 
-        #endregion
+#endregion
 
         private void ReadListTable(RTFReader reader)
         {
@@ -3440,7 +3445,12 @@ namespace RtfDomParser
                         }
                         else if (reader.Keyword == "fnil")
                         {
-                            name = System.Windows.Forms.Control.DefaultFont.Name;
+                            name =
+#if WINFORMS
+                                System.Windows.Forms.Control.DefaultFont.Name;
+#else
+                                "Times New Roman";
+#endif
                             nilFlag = true;
                         }
                         else if (reader.Keyword == RTFConsts._fcharset)
@@ -3478,7 +3488,12 @@ namespace RtfDomParser
                         name = name.Trim();
                         if (string.IsNullOrEmpty(name))
                         {
-                            name = System.Windows.Forms.Control.DefaultFont.Name;
+                            name =
+#if WINFORMS
+                                System.Windows.Forms.Control.DefaultFont.Name;
+#else
+                                "Times New Roman";
+#endif
                         }
                         //System.Console.WriteLine( "Index:" + index + "  Name:" + name );
                         RTFFont font = new RTFFont(index, name);
