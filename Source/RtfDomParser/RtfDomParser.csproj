@@ -1,14 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net5.0</TargetFramework>
+		<TargetFramework>net6.0</TargetFramework>
 		<PackageId>RtfDomParserCore</PackageId>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 		<PackageProjectUrl>https://github.com/brianberns/RtfDomParser</PackageProjectUrl>
 		<Authors>Nikolay.IT, yuan yong fu, Brian Berns</Authors>
 		<Company />
 		<Description>RtfDomParser (a.k.a. DCSoft.RTF and XDesigner.RTF) is an open source C# library for parsing RTF documents and generating RTF DOM Tree. This version supports .NET Core.</Description>
-		<Version>1.0.2</Version>
+		<Version>1.0.3</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -19,7 +19,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
+	  <PackageReference Include="System.Drawing.Common" Version="5.0.3" />
 	</ItemGroup>
 
 </Project>
