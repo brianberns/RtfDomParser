@@ -10,10 +10,6 @@
 
 using System;
 using System.Runtime.InteropServices ;
-using System.IO ;
-using System.Drawing ;
-using System.Drawing.Imaging ;
-using System.Text ;
 
 namespace RtfDomParser
 {
@@ -25,10 +21,10 @@ namespace RtfDomParser
 
 
         /// <summary>
-        /// ÅÐ¶Ï¶ÔÏóÊÇ·ñÓÐÊµ¼ÊÄÚÈÝ
+        /// ï¿½Ð¶Ï¶ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         /// </summary>
-        /// <param name="rootElement">¸ùÔªËØ¶ÔÏó</param>
-        /// <returns>ÊÇ·ñÓÐÊµ¼ÊÄÚÈÝ</returns>
+        /// <param name="rootElement">ï¿½ï¿½Ôªï¿½Ø¶ï¿½ï¿½ï¿½</param>
+        /// <returns>ï¿½Ç·ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</returns>
         public static bool HasContentElement(RTFDomElement rootElement)
         {
             if (rootElement.Elements.Count == 0)
@@ -94,6 +90,7 @@ namespace RtfDomParser
 
 
 
+		/*
 		/// <summary>
 		/// Wraps the image in an Enhanced Metafile by drawing the image onto the
 		/// graphics context, then converts the Enhanced Metafile to a Windows
@@ -136,7 +133,7 @@ namespace RtfDomParser
 				_stream = new MemoryStream();
 
 				// Get a graphics context from the RichTextBox
-				using(_graphics = System.Drawing.Graphics.FromHwnd( new IntPtr( 0 ) ))
+				using(_graphics = Graphics.FromHwnd( new IntPtr( 0 ) ))
 				{
 
 					// Get the device context from the graphics context
@@ -154,7 +151,7 @@ namespace RtfDomParser
 				{
 
 					// Draw the image on the Enhanced Metafile
-					_graphics.DrawImage(_image, new Rectangle(0, 0, _image.Width, _image.Height));
+                    _graphics.DrawImage(_image, new Rectangle(0, 0, _image.Width, _image.Height));
 
 				}
 
@@ -193,6 +190,7 @@ namespace RtfDomParser
 					_stream.Close();
 			}
 		}
+		*/
   
 
 		private RTFUtil()

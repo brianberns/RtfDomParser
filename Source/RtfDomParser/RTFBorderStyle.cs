@@ -7,12 +7,9 @@
  * 
  */
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Drawing ;
-using System.Drawing.Drawing2D;
+using SixLabors.ImageSharp ;
 using System.ComponentModel;
+using RtfDomParser.Utils;
 
 namespace RtfDomParser
 {

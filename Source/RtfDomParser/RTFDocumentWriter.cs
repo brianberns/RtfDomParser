@@ -11,6 +11,10 @@
 
 using System;
 using System.Collections ;
+using RtfDomParser.Utils;
+using SixLabors.Fonts;
+using SixLabors.ImageSharp;
+
 //using DCSoft.Drawing ;
 //using DCSoft.Printing ;
 
@@ -206,23 +210,23 @@ namespace RtfDomParser
                 }
             }
         }
-		public void WriteBorderLineDashStyle( System.Drawing.Drawing2D.DashStyle style )
+		public void WriteBorderLineDashStyle( DashStyle style )
 		{
 			if( bolCollectionInfo == false )
 			{
-				if( style == System.Drawing.Drawing2D.DashStyle.Dot )
+				if( style == DashStyle.Dot )
 				{
 					this.WriteKeyword("brdrdot");
 				}
-				else if( style == System.Drawing.Drawing2D.DashStyle.DashDot )
+				else if( style == DashStyle.DashDot )
 				{
 					this.WriteKeyword("brdrdashd");
 				}
-				else if( style == System.Drawing.Drawing2D.DashStyle.DashDotDot )
+				else if( style == DashStyle.DashDotDot )
 				{
 					this.WriteKeyword("brdrdashdd");
 				}
-				else if( style == System.Drawing.Drawing2D.DashStyle.Dash )
+				else if( style == DashStyle.Dash )
 				{
 					this.WriteKeyword("brdrdash");
 				}
@@ -235,7 +239,7 @@ namespace RtfDomParser
 
         private bool _DebugMode = true;
         /// <summary>
-        /// 处于调试模式
+        /// 锟斤拷锟节碉拷锟斤拷模式
         /// </summary>
         public bool DebugMode
         {
@@ -332,7 +336,8 @@ namespace RtfDomParser
 				myWriter.WriteRaw(";");
 				for( int iCount = 0 ; iCount < myColorTable.Count ; iCount ++ )
 				{
-					System.Drawing.Color c = myColorTable[ iCount ] ;
+					Color ic = myColorTable[ iCount ] ;
+                    var c = ic.Extract();
 					myWriter.WriteKeyword( "red" + c.R );
 					myWriter.WriteKeyword( "green" + c.G );
 					myWriter.WriteKeyword( "blue" + c.B );
@@ -679,7 +684,7 @@ namespace RtfDomParser
 		/// write font format
 		/// </summary>
 		/// <param name="font">font</param>
-		public void WriteFont( System.Drawing.Font font )
+		public void WriteFont( Font font )
 		{
 			if( font == null )
 			{
@@ -696,22 +701,26 @@ namespace RtfDomParser
 				{
 					myWriter.WriteKeyword( "f" + index );
 				}
-				if( font.Bold )
+				if( font.IsBold )
 				{
 					myWriter.WriteKeyword("b");
 				}
-				if( font.Italic )
+				if( font.IsItalic )
 				{
 					myWriter.WriteKeyword("i");
 				}
+				/* TODO
 				if( font.Underline )
 				{
 					myWriter.WriteKeyword("ul");
 				}
+				*/
+				/* TODO
 				if( font.Strikeout )
 				{
 					myWriter.WriteKeyword("strike");
 				}
+				*/
 				myWriter.WriteKeyword("fs" + Convert.ToInt32( font.Size * 2 ));
 			}
 		}
@@ -730,7 +739,7 @@ namespace RtfDomParser
                 myFontTable.Add(info.FontName);
                 myColorTable.Add(info.TextColor);
                 myColorTable.Add(info.BackColor);
-                if (info.BorderColor.A != 0)
+                if (info.BorderColor.GetAlpha() != 0)
                 {
                     myColorTable.Add(info.BorderColor);
                 }
@@ -809,7 +818,7 @@ namespace RtfDomParser
                 || info.BottomBorder)
             {
                 // border color
-                if (info.BorderColor.A != 0)
+                if (info.BorderColor.GetAlpha() != 0)
                 {
                     myWriter.WriteKeyword("chbrdr");
                     myWriter.WriteKeyword("brdrs");
@@ -953,7 +962,7 @@ namespace RtfDomParser
 		/// <param name="width">pixel width</param>
 		/// <param name="height">pixel height</param>
 		/// <param name="ImageData">image binary data</param>
-		public void WriteImage( System.Drawing.Image img , int width , int height , byte[] ImageData )
+		public void WriteImage( Image img , int width , int height , byte[] ImageData )
 		{
 			if( this.bolCollectionInfo )
 			{
@@ -965,17 +974,17 @@ namespace RtfDomParser
 					return ;
 
 				System.IO.MemoryStream ms = new System.IO.MemoryStream();
-				img.Save( ms , System.Drawing.Imaging.ImageFormat.Jpeg );
+                img.SaveAsJpeg(ms);
 				ms.Close();
 				byte[] bs = ms.ToArray();
 				myWriter.WriteStartGroup();
 				
 				myWriter.WriteKeyword("pict");
 				myWriter.WriteKeyword("jpegblip");
-				myWriter.WriteKeyword("picscalex" + Convert.ToInt32( width * 100.0 / img.Size.Width ));
-				myWriter.WriteKeyword("picscaley" + Convert.ToInt32( height * 100.0 / img.Size.Height ));
-				myWriter.WriteKeyword("picwgoal" + Convert.ToString( img.Size.Width * 15 ));
-				myWriter.WriteKeyword("pichgoal" + Convert.ToString( img.Size.Height * 15 ));
+				myWriter.WriteKeyword("picscalex" + Convert.ToInt32( width * 100.0 / img.Width ));
+				myWriter.WriteKeyword("picscaley" + Convert.ToInt32( height * 100.0 / img.Height ));
+				myWriter.WriteKeyword("picwgoal" + Convert.ToString( img.Width * 15 ));
+				myWriter.WriteKeyword("pichgoal" + Convert.ToString( img.Height * 15 ));
 				myWriter.WriteBytes( bs );
 				myWriter.WriteEndGroup();
 			}

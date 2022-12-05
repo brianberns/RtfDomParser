@@ -9,8 +9,9 @@
 
 
 
-using System;
 using System.Collections ;
+using RtfDomParser.Utils;
+using SixLabors.ImageSharp;
 
 namespace RtfDomParser
 {
@@ -32,11 +33,11 @@ namespace RtfDomParser
 		/// <summary>
 		/// get color at special index
 		/// </summary>
-		public System.Drawing.Color this[ int index ]
+		public Color this[ int index ]
 		{
 			get
             {
-                return ( System.Drawing.Color ) myItems[ index ] ;
+                return ( Color ) myItems[ index ] ;
             }
 		}
 
@@ -46,12 +47,12 @@ namespace RtfDomParser
 		/// <param name="index">index</param>
 		/// <param name="DefaultValue">default value</param>
 		/// <returns>color value</returns>
-		public System.Drawing.Color GetColor( int index , System.Drawing.Color DefaultValue )
+		public Color GetColor( int index , Color DefaultValue )
 		{
 			index -- ;
             if (index >= 0 && index < myItems.Count)
             {
-                return (System.Drawing.Color)myItems[index];
+                return (Color)myItems[index];
             }
             else
             {
@@ -79,16 +80,19 @@ namespace RtfDomParser
 		/// add color to list
 		/// </summary>
 		/// <param name="c">new color value</param>
-		public void Add( System.Drawing.Color c )
+		public void Add( Color c )
 		{
-			if( c.IsEmpty )
+			if( c == ImageTools.ColorEmpty )
 				return ;
-			if( c.A == 0 )
+
+            var A = c.GetAlpha();
+
+            if ( A == 0 )
 				return ;
 			
-			if( c.A != 255 )
+			if( A != 255 )
 			{
-				c = System.Drawing.Color.FromArgb( 255 , c );
+				c = c.WithAlpha(255);
 			}
 
             if (bolCheckValueExistWhenAdd)
@@ -107,7 +111,7 @@ namespace RtfDomParser
 		/// delete special color
 		/// </summary>
 		/// <param name="c">color value</param>
-		public void Remove( System.Drawing.Color c )
+		public void Remove( Color c )
 		{
 			int index = IndexOf( c );
 			if( index >= 0 )
@@ -118,19 +122,21 @@ namespace RtfDomParser
 		/// </summary>
 		/// <param name="c">color</param>
 		/// <returns>index , if not found , return -1</returns>
-		public int IndexOf( System.Drawing.Color c )
-		{
-            if (c.A == 0)
+		public int IndexOf( Color c )
+        {
+            var A = c.GetAlpha();
+
+            if (A == 0)
             {
                 return -1;
             }
-			if( c.A != 255 )
+			if( A != 255 )
 			{
-				c = System.Drawing.Color.FromArgb( 255 , c );
+				c = c.WithAlpha(255);
 			}
             for (int iCount = 0; iCount < myItems.Count; iCount++)
             {
-                System.Drawing.Color color = (System.Drawing.Color)myItems[iCount];
+                Color color = (Color)myItems[iCount];
                 if (color.ToArgb() == c.ToArgb())
                 {
                     return iCount;
@@ -139,14 +145,14 @@ namespace RtfDomParser
 			return -1 ;
 		}
 		/// <summary>
-		/// Çå¿ÕÁÐ±í
+		/// ï¿½ï¿½ï¿½ï¿½Ð±ï¿½
 		/// </summary>
 		public void Clear()
 		{
 			myItems.Clear();
 		}
 		/// <summary>
-		/// ÔªËØ¸öÊý
+		/// Ôªï¿½Ø¸ï¿½ï¿½ï¿½
 		/// </summary>
 		public int Count
 		{
@@ -154,9 +160,9 @@ namespace RtfDomParser
 		}
 
 		/// <summary>
-		/// Êä³öÑÕÉ«±í
+		/// ï¿½ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½
 		/// </summary>
-		/// <param name="writer">RTFÎÄµµÊéÐ´Æ÷</param>
+		/// <param name="writer">RTFï¿½Äµï¿½ï¿½ï¿½Ð´ï¿½ï¿½</param>
 		public void Write( RTFWriter writer )
 		{
 			writer.WriteStartGroup();
@@ -164,7 +170,8 @@ namespace RtfDomParser
 			writer.WriteRaw(";");
 			for( int iCount = 0 ; iCount < myItems.Count ; iCount ++ )
 			{
-				System.Drawing.Color c = ( System.Drawing.Color ) myItems[ iCount ] ;
+				Color ic = ( Color ) myItems[ iCount ] ;
+                var c = ic.Extract();
 				writer.WriteKeyword( "red" + c.R );
 				writer.WriteKeyword( "green" + c.G );
 				writer.WriteKeyword( "blue" + c.B );
@@ -174,15 +181,15 @@ namespace RtfDomParser
 		}
 
         /// <summary>
-        /// ¸´ÖÆ¶ÔÏó
+        /// ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½ï¿½
         /// </summary>
-        /// <returns>¸´ÖÆÆ·</returns>
+        /// <returns>ï¿½ï¿½ï¿½ï¿½Æ·</returns>
         public RTFColorTable Clone()
         {
             RTFColorTable table = new RTFColorTable();
             for (int iCount = 0; iCount < myItems.Count; iCount++)
             {
-                System.Drawing.Color c = ( System.Drawing.Color ) myItems[ iCount ] ;
+                Color c = ( Color ) myItems[ iCount ] ;
                 table.myItems.Add(c);
             }
             return table;
