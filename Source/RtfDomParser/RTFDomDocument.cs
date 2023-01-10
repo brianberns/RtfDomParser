@@ -25,6 +25,12 @@ namespace RtfDomParser
     /// </remarks>
     public partial class RTFDomDocument : RTFDomElement
     {
+        static RTFDomDocument()
+        {
+            // https://gunnarpeipman.com/no-data-is-available-for-encoding/
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+        }
+
         /// <summary>
         /// initialize instance
         /// </summary>
