@@ -9,8 +9,9 @@
 
 using System;
 using System.ComponentModel;
-using System.Drawing;
-using System.Drawing.Drawing2D;
+using RtfDomParser.Utils;
+using SixLabors.Fonts;
+using SixLabors.ImageSharp;
 
 namespace RtfDomParser
 {
@@ -95,7 +96,7 @@ namespace RtfDomParser
 
         private bool bolBottomBorder = false;
         /// <summary>
-        /// ÊÇ·ñÏÔÊ¾ÏÂ±ß¿òÏß
+        /// ï¿½Ç·ï¿½ï¿½ï¿½Ê¾ï¿½Â±ß¿ï¿½ï¿½ï¿½
         /// </summary>
         [DefaultValue(false)]
         public bool BottomBorder
@@ -110,13 +111,13 @@ namespace RtfDomParser
             }
         }
 
-        private System.Drawing.Color intBorderColor
-            = System.Drawing.Color.Black;
+        private Color intBorderColor
+            = Color.Black;
         /// <summary>
         /// Border line color
         /// </summary>
-        [DefaultValue(typeof(System.Drawing.Color), "Black")]
-        public System.Drawing.Color BorderColor
+        [DefaultValue(typeof(Color), "Black")]
+        public Color BorderColor
         {
             get
             {
@@ -147,7 +148,7 @@ namespace RtfDomParser
 
         private DashStyle _BorderStyle = DashStyle.Solid;
         /// <summary>
-        /// ±ß¿òÏßÑùÊ½
+        /// ï¿½ß¿ï¿½ï¿½ï¿½ï¿½ï¿½Ê½
         /// </summary>
         [DefaultValue( DashStyle.Solid )]
         public DashStyle BorderStyle
@@ -164,7 +165,7 @@ namespace RtfDomParser
 
         private bool _BorderThickness = false;
         /// <summary>
-        /// ²ÉÓÃ´Ö±ß¿òÏßÑùÊ½
+        /// ï¿½ï¿½ï¿½Ã´Ö±ß¿ï¿½ï¿½ï¿½ï¿½ï¿½Ê½
         /// </summary>
         [DefaultValue( false )]
         public bool BorderThickness
@@ -181,7 +182,7 @@ namespace RtfDomParser
 
         private int _BorderSpacing = 0;
         /// <summary>
-        /// ±ß¿òÏß¾àÀë
+        /// ï¿½ß¿ï¿½ï¿½ß¾ï¿½ï¿½ï¿½
         /// </summary>
         [DefaultValue( 0 )]
         public int BorderSpacing
@@ -356,7 +357,7 @@ namespace RtfDomParser
 
         private bool _PageBreak = false;
         /// <summary>
-        /// ¶ÎÂäÇ°Ç¿ÖÆ·ÖÒ³
+        /// ï¿½ï¿½ï¿½ï¿½Ç°Ç¿ï¿½Æ·ï¿½Ò³
         /// </summary>
         [DefaultValue( false )]
         public bool PageBreak
@@ -370,13 +371,13 @@ namespace RtfDomParser
         /// </summary>
         public int NativeLevel = 0;
 
-        public void SetAlign(System.Drawing.StringAlignment align)
+        public void SetAlign(StringAlignment align)
         {
-            if (align == System.Drawing.StringAlignment.Center)
+            if (align == StringAlignment.Center)
             {
                 this.Align = RTFAlignment.Center;
             }
-            else if (align == System.Drawing.StringAlignment.Far)
+            else if (align == StringAlignment.Far)
             {
                 this.Align = RTFAlignment.Right;
             }
@@ -387,7 +388,7 @@ namespace RtfDomParser
         }
 
         [Browsable(false)]
-        public System.Drawing.Font Font
+        public Font Font
         {
             set
             {
@@ -395,10 +396,10 @@ namespace RtfDomParser
                 {
                     FontName = value.Name;
                     FontSize = value.Size;
-                    Bold = value.Bold;
-                    Italic = value.Italic;
-                    Underline = value.Underline;
-                    Strikeout = value.Strikeout;
+                    Bold = value.IsBold;
+                    Italic = value.IsItalic;
+                    // TODO Underline = value.Underline;
+                    // TODO Strikeout = value.Strikeout;
                 }
             }
         }
@@ -528,12 +529,12 @@ namespace RtfDomParser
             }
         }
 
-        private System.Drawing.Color intTextColor = System.Drawing.Color.Black;
+        private Color intTextColor = Color.Black;
         /// <summary>
         /// text color
         /// </summary>
-        [DefaultValue(typeof(System.Drawing.Color), "Black")]
-        public System.Drawing.Color TextColor
+        [DefaultValue(typeof(Color), "Black")]
+        public Color TextColor
         {
             get
             {
@@ -545,12 +546,12 @@ namespace RtfDomParser
             }
         }
 
-        private System.Drawing.Color intBackColor = System.Drawing.Color.Empty;
+        private Color intBackColor = ImageTools.ColorEmpty;
         /// <summary>
         /// back color
         /// </summary>
-        [DefaultValue(typeof(System.Drawing.Color), "Empty")]
-        public System.Drawing.Color BackColor
+        [DefaultValue(typeof(Color), "Empty")]
+        public Color BackColor
         {
             get
             {
@@ -563,9 +564,9 @@ namespace RtfDomParser
         }
 
         ///// <summary>
-        ///// ±ß¿òÏßÑÕÉ«
+        ///// ï¿½ß¿ï¿½ï¿½ï¿½ï¿½ï¿½É«
         ///// </summary>
-        //public System.Drawing.Color BorderColor = System.Drawing.Color.Empty;
+        //public Color BorderColor = Color.Empty;
         private string strLink = null;
         /// <summary>
         /// link
@@ -818,8 +819,8 @@ namespace RtfDomParser
             this.Italic = false;
             this.Underline = false;
             this.Strikeout = false;
-            this.TextColor = System.Drawing.Color.Black;
-            this.BackColor = System.Drawing.Color.Empty;
+            this.TextColor = Color.Black;
+            this.BackColor = ImageTools.ColorEmpty;
             //this.Link = null ;
             this.Subscript = false;
             this.Superscript = false;
@@ -858,7 +859,7 @@ namespace RtfDomParser
             //this.TopBorder = false;
             //this.RightBorder = false;
             //this.BottomBorder = false;
-            //this.BorderColor = System.Drawing.Color.Transparent;
+            //this.BorderColor = Color.Transparent;
         }
 
         public void Reset()
@@ -883,8 +884,8 @@ namespace RtfDomParser
             this.Italic = false;
             this.Underline = false;
             this.Strikeout = false;
-            this.TextColor = System.Drawing.Color.Black;
-            this.BackColor = System.Drawing.Color.Empty;
+            this.TextColor = Color.Black;
+            this.BackColor = ImageTools.ColorEmpty;
             this.Link = null;
             this.Subscript = false;
             this.Superscript = false;
@@ -969,7 +970,7 @@ namespace RtfDomParser
 
 //        private RTFBorderStyle _Border = new RTFBorderStyle();
 //        /// <summary>
-//        /// ±ß¿òÑùÊ½
+//        /// ï¿½ß¿ï¿½ï¿½ï¿½Ê½
 //        /// </summary>
 //        public RTFBorderStyle Border
 //        {
@@ -979,7 +980,7 @@ namespace RtfDomParser
 
 //        private RTFBorderStyle _ParagraphBorder = new RTFBorderStyle();
 //        /// <summary>
-//        /// ¶ÎÂä±ß¿òÑùÊ½
+//        /// ï¿½ï¿½ï¿½ï¿½ß¿ï¿½ï¿½ï¿½Ê½
 //        /// </summary>
 //        public RTFBorderStyle ParagraphBorder
 //        {
@@ -1128,13 +1129,13 @@ namespace RtfDomParser
 //        /// </summary>
 //        public int NativeLevel = 0;
 
-//        public void SetAlign( System.Drawing.StringAlignment align )
+//        public void SetAlign( StringAlignment align )
 //        {
-//            if (align == System.Drawing.StringAlignment.Center)
+//            if (align == StringAlignment.Center)
 //            {
 //                this.Align = RTFAlignment.Center;
 //            }
-//            else if (align == System.Drawing.StringAlignment.Far)
+//            else if (align == StringAlignment.Far)
 //            {
 //                this.Align = RTFAlignment.Right;
 //            }
@@ -1145,7 +1146,7 @@ namespace RtfDomParser
 //        }
         
 //        [Browsable( false )]
-//        public System.Drawing.Font Font
+//        public Font Font
 //        {
 //            set
 //            {
@@ -1280,12 +1281,12 @@ namespace RtfDomParser
 //            }
 //        }
 
-//        private System.Drawing.Color intTextColor = System.Drawing.Color.Black;
+//        private Color intTextColor = Color.Black;
 //        /// <summary>
 //        /// text color
 //        /// </summary>
-//        [DefaultValue(typeof(System.Drawing.Color), "Black")]
-//        public System.Drawing.Color TextColor
+//        [DefaultValue(typeof(Color), "Black")]
+//        public Color TextColor
 //        {
 //            get
 //            {
@@ -1297,12 +1298,12 @@ namespace RtfDomParser
 //            }
 //        }
 
-//        private System.Drawing.Color intBackColor = System.Drawing.Color.Empty;
+//        private Color intBackColor = Color.Empty;
 //        /// <summary>
 //        /// back color
 //        /// </summary>
-//        [DefaultValue(typeof(System.Drawing.Color), "Empty")]
-//        public System.Drawing.Color BackColor
+//        [DefaultValue(typeof(Color), "Empty")]
+//        public Color BackColor
 //        {
 //            get
 //            {
@@ -1315,9 +1316,9 @@ namespace RtfDomParser
 //        }
 
 //        ///// <summary>
-//        ///// ±ß¿òÏßÑÕÉ«
+//        ///// ï¿½ß¿ï¿½ï¿½ï¿½ï¿½ï¿½É«
 //        ///// </summary>
-//        //public System.Drawing.Color BorderColor = System.Drawing.Color.Empty;
+//        //public Color BorderColor = Color.Empty;
 //        private string strLink = null;
 //        /// <summary>
 //        /// link
@@ -1544,8 +1545,8 @@ namespace RtfDomParser
 //            this.Italic = false;
 //            this.Underline = false;
 //            this.Strikeout = false;
-//            this.TextColor = System.Drawing.Color.Black;
-//            this.BackColor = System.Drawing.Color.Empty;
+//            this.TextColor = Color.Black;
+//            this.BackColor = Color.Empty;
 //            //this.Link = null ;
 //            this.Subscript = false;
 //            this.Superscript = false;
@@ -1567,7 +1568,7 @@ namespace RtfDomParser
 //            //this.TopBorder = false;
 //            //this.RightBorder = false;
 //            //this.BottomBorder = false;
-//            //this.BorderColor = System.Drawing.Color.Transparent;
+//            //this.BorderColor = Color.Transparent;
 //        }
 
 //        public void Reset()
@@ -1584,8 +1585,8 @@ namespace RtfDomParser
 //            this.Italic = false;
 //            this.Underline = false;
 //            this.Strikeout = false;
-//            this.TextColor = System.Drawing.Color.Black;
-//            this.BackColor = System.Drawing.Color.Empty;
+//            this.TextColor = Color.Black;
+//            this.BackColor = Color.Empty;
 //            this.Link = null;
 //            this.Subscript = false;
 //            this.Superscript = false;

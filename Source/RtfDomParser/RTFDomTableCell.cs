@@ -10,7 +10,6 @@
 
 
 using System;
-using System.Text;
 
 namespace RtfDomParser
 {
@@ -338,12 +337,12 @@ namespace RtfDomParser
             }
         }
 
-        //private System.Drawing.Color intBorderColor = System.Drawing.Color.Black;
+        //private Color intBorderColor = Color.Black;
         ///// <summary>
         ///// border color
         ///// </summary>
-        //[System.ComponentModel.DefaultValue(typeof(System.Drawing.Color), "Black")]
-        //public System.Drawing.Color BorderColor
+        //[System.ComponentModel.DefaultValue(typeof(Color), "Black")]
+        //public Color BorderColor
         //{
         //    get
         //    {
@@ -355,12 +354,12 @@ namespace RtfDomParser
         //    }
         //}
 
-        //private System.Drawing.Color intBackColor = System.Drawing.Color.Transparent;
+        //private Color intBackColor = Color.Transparent;
         ///// <summary>
         ///// back color
         ///// </summary>
-        //[System.ComponentModel.DefaultValue(typeof(System.Drawing.Color), "Transparent")]
-        //public System.Drawing.Color BackColor
+        //[System.ComponentModel.DefaultValue(typeof(Color), "Transparent")]
+        //public Color BackColor
         //{
         //    get
         //    {

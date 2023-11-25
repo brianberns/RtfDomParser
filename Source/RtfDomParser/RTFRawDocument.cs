@@ -8,6 +8,8 @@
  */
 
 using System;
+using RtfDomParser.Utils;
+using SixLabors.ImageSharp;
 
 namespace RtfDomParser
 {
@@ -182,7 +184,7 @@ namespace RtfDomParser
                 {
                     if (r >= 0 && g >= 0 && b >= 0)
                     {
-                        System.Drawing.Color c = System.Drawing.Color.FromArgb(255, r, g, b);
+                        Color c = ImageTools.FromArgb(255, r, g, b);
                         myColorTable.Add(c);
                         r = -1;
                         g = -1;
@@ -193,7 +195,7 @@ namespace RtfDomParser
             if (r >= 0 && g >= 0 && b >= 0)
             {
                 // read the last color
-                System.Drawing.Color c = System.Drawing.Color.FromArgb(255, r, g, b);
+                Color c = ImageTools.FromArgb(255, r, g, b);
                 myColorTable.Add(c);
             }
         }

@@ -13,7 +13,7 @@ Converted to .NET Core by Brian Berns.
 
 [![Build status](https://ci.appveyor.com/api/projects/status/ts22h5vdkjej9j25?svg=true)](https://ci.appveyor.com/project/NikolayIT/rtfdomparser)
 
-**NuGet:** https://www.nuget.org/packages/RtfDomParser/
+**NuGet:** https://www.nuget.org/packages/RtfDomParserCore/
 
 ## Features
 * Parse RTF and generate dom tree.

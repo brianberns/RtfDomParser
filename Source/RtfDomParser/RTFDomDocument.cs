@@ -12,8 +12,8 @@ using System.Collections;
 using System.Text;
 using System.ComponentModel ;
 using System.Collections.Generic;
-using System.Drawing ;
-using System.Drawing.Drawing2D ;
+using RtfDomParser.Utils;
+using SixLabors.ImageSharp;
 
 namespace RtfDomParser
 {
@@ -501,7 +501,7 @@ namespace RtfDomParser
         }
 
         /// <summary>
-        /// ½«ÎÄµµÖÐËùÓÐµÄÄÚÈÝ¶¼·ÅÖÃÔÚ¶ÎÂäÖÐ¡£
+        /// ï¿½ï¿½ï¿½Äµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½Ý¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¶ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½
         /// </summary>
         public void FixForParagraphs( RTFDomElement parentElement )
         {
@@ -617,7 +617,7 @@ namespace RtfDomParser
             }
 
 
-            //// É¾³ýÁÙÊ±Éú³ÉµÄ¶ÍÁ¶¶ÔÏó£¬½«¶ÎÂäÕûÌåÍùÉÏ´í¶¯ÒÆ¶¯Ò»Î»
+            //// É¾ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ÉµÄ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ó£¬½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½Ò»Î»
             //RTFDomParagraph tempP = null;
             //RTFDomParagraph lastP = null;
             //foreach (RTFDomElement element in parentElement.Elements)
@@ -643,7 +643,7 @@ namespace RtfDomParser
             //}//foreach
             //if (tempP != null && lastP != null)
             //{
-            //    // Èô·¢Éú¶ÍÁ¶ÏòÉÏ´íÎ»ÒÆ¶¯£¬¶øÇÒ×îºóÒ»¸ö¶ÎÂäÎª¿Õ£¬ÔòÉ¾³ý×îºóÒ»¸ö¶ÎÂä¡£
+            //    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½Î»ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½Õ£ï¿½ï¿½ï¿½É¾ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ä¡£
             //    if (lastP.Elements.Count == 0)
             //    {
             //        parentElement.Elements.Remove(lastP);
@@ -916,9 +916,9 @@ namespace RtfDomParser
         }
 
         /// <summary>
-        /// ½«±í¸ñÐÐÔªËØºÏ²¢³É±í¸ñÔªËØ
+        /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ôªï¿½ØºÏ²ï¿½ï¿½É±ï¿½ï¿½ï¿½Ôªï¿½ï¿½
         /// </summary>
-        /// <param name="parentElement">¸¸ÔªËØ¶ÔÏó</param>
+        /// <param name="parentElement">ï¿½ï¿½Ôªï¿½Ø¶ï¿½ï¿½ï¿½</param>
         private void CombinTable(RTFDomElement parentElement)
         {
             ArrayList result = new ArrayList();
@@ -1110,7 +1110,7 @@ namespace RtfDomParser
                 RTFDomTableRow row = (RTFDomTableRow)table.Elements[iCount];
                 if (row.Elements.Count == 0)
                 {
-                    // É¾³ýÃ»ÓÐÄÚÈÝµÄ±í¸ñÐÐ
+                    // É¾ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ÝµÄ±ï¿½ï¿½ï¿½ï¿½ï¿½
                     table.Elements.RemoveAt(iCount);
                 }
             }
@@ -1253,13 +1253,13 @@ namespace RtfDomParser
                     }
                     for (int iCount = cell.Attributes.Count - 1; iCount >= 0; iCount--)
                     {
-                        // ¸ù¾Ý brdrtbl Ö¸ÁîÀ´Òþ²ØÄ³Ìõµ¥Ôª¸ñ±ß¿òÏß
+                        // ï¿½ï¿½ï¿½ï¿½ brdrtbl Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½ï¿½ï¿½Ôªï¿½ï¿½ß¿ï¿½ï¿½ï¿½
                         string name3 = cell.Attributes.GetItem(iCount).Name;
                         if ( name3 == RTFConsts._brdrtbl 
                             || name3 == RTFConsts._brdrnone 
                             || name3 == RTFConsts._brdrnil )
                         {
-                            // Ä³¸ö±ß¿ò²»ÏÔÊ¾
+                            // Ä³ï¿½ï¿½ï¿½ß¿ï¿½ï¿½ï¿½Ê¾
                             for (int iCount2 = iCount - 1; iCount2 >= 0; iCount2--)
                             {
                                 string name2 = cell.Attributes.GetItem(iCount2).Name;
@@ -1710,7 +1710,7 @@ namespace RtfDomParser
                     switch (reader.Keyword)
                     {
                         case "fromhtml":
-                            // ÒÔHTML·½Ê½¶ÁÈ¡ÎÄµµÄÚÈÝ
+                            // ï¿½ï¿½HTMLï¿½ï¿½Ê½ï¿½ï¿½È¡ï¿½Äµï¿½ï¿½ï¿½ï¿½ï¿½
                             ReadHtmlContent(reader);
                             return;
                         case RTFConsts._listtable:
@@ -2006,9 +2006,9 @@ namespace RtfDomParser
                                 }
                                 else
                                 {
-                                    // ½áÊøµ±Ç°¶ÎÂä
+                                    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½
                                     this.CompleteParagraph();
-                                    // ´´½¨ÐÂµÄ¶ÎÂä
+                                    // ï¿½ï¿½ï¿½ï¿½ï¿½ÂµÄ¶ï¿½ï¿½ï¿½
                                     RTFDomParagraph p = new RTFDomParagraph();
                                     p.Format = _ParagraphFormat;
                                     AddContentElement(p);
@@ -2018,7 +2018,7 @@ namespace RtfDomParser
                             }
                         case RTFConsts._page:
                             {
-                                // Ç¿ÖÆ·ÖÒ³
+                                // Ç¿ï¿½Æ·ï¿½Ò³
                                 bolStartContent = true;
                                 this.CompleteParagraph();
                                 this.AddContentElement(new RTFDomPageBreak());
@@ -2026,7 +2026,7 @@ namespace RtfDomParser
                             }
                         case RTFConsts._pagebb:
                             {
-                                // ÔÚ¶ÎÂäÇ°Ç¿ÖÆ·ÖÒ³
+                                // ï¿½Ú¶ï¿½ï¿½ï¿½Ç°Ç¿ï¿½Æ·ï¿½Ò³
                                 bolStartContent = true;
                                 _ParagraphFormat.PageBreak = true;
                                 break;
@@ -2278,7 +2278,7 @@ namespace RtfDomParser
                                 {
                                     if (reader.HasParam)
                                     {
-                                        format.TextColor = this.ColorTable.GetColor( reader.Parameter, System.Drawing.Color.Black);
+                                        format.TextColor = this.ColorTable.GetColor( reader.Parameter, Color.Black);
                                     }
                                 }
                                 break;
@@ -2293,7 +2293,7 @@ namespace RtfDomParser
                                 {
                                     if ( reader.HasParam )
                                     {
-                                        format.BackColor = this.ColorTable.GetColor(reader.Parameter, System.Drawing.Color.Empty);
+                                        format.BackColor = this.ColorTable.GetColor(reader.Parameter, ImageTools.ColorEmpty);
                                     }
                                 }
                                 break;
@@ -2335,7 +2335,7 @@ namespace RtfDomParser
                                     {
                                         format.BackColor = this.ColorTable.GetColor(
                                             reader.Parameter ,
-                                            System.Drawing.Color.Empty );
+                                            ImageTools.ColorEmpty );
                                     }
                                 }
                                 break;
@@ -2920,7 +2920,7 @@ namespace RtfDomParser
                                     if (reader.Parameter == 0)
                                     {
                                         // is the 0 level , belong to document , not to a table
-                                        // £¿£¿£¿£¿£¿£¿ \itap0¹¦ÄÜ²»Ã÷£¬¿´À´»¹ÊÇÒÔ \cellÖ¸ÁîÎª×¼
+                                        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ \itap0ï¿½ï¿½ï¿½Ü²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ \cellÖ¸ï¿½ï¿½Îª×¼
                                         //foreach (RTFDomElement element in es)
                                         //{
                                         //    if (element is RTFDomTableRow || element is RTFDomTableCell)
@@ -3174,7 +3174,7 @@ namespace RtfDomParser
                 }
                 else if (reader.TokenType == RTFTokenType.GroupStart)
                 {
-                    // ¶ÁÈ¡Ò»Ìõ¼ÇÂ¼
+                    // ï¿½ï¿½È¡Ò»ï¿½ï¿½ï¿½ï¿½Â¼
                     int level = reader.Level;
                     RTFListOverride record = null;
                     while (reader.ReadToken() != null)
@@ -3346,7 +3346,7 @@ namespace RtfDomParser
                         {
                             if (reader.CurrentToken.Key != "list")
                             {
-                                // ²»ÊÇÒÔlist¿ªÍ·£¬ºöÂÔµô
+                                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½listï¿½ï¿½Í·ï¿½ï¿½ï¿½ï¿½ï¿½Ôµï¿½
                                 ReadToEndGround(reader);
                                 reader.ReadToken();
                                 break;
@@ -3542,7 +3542,7 @@ namespace RtfDomParser
                     case ";":
                         if (r >= 0 && g >= 0 && b >= 0)
                         {
-                            System.Drawing.Color c = System.Drawing.Color.FromArgb(255, r, g, b);
+                            Color c = ImageTools.FromArgb(255, r, g, b);
                             myColorTable.Add(c);
                             r = -1;
                             g = -1;
@@ -3554,7 +3554,7 @@ namespace RtfDomParser
             if (r >= 0 && g >= 0 && b >= 0)
             {
                 // read the last color
-                System.Drawing.Color c = System.Drawing.Color.FromArgb(255, r, g, b);
+                Color c = ImageTools.FromArgb(255, r, g, b);
                 myColorTable.Add(c);
             }
         }
@@ -3829,7 +3829,7 @@ namespace RtfDomParser
                         obj.ScaleY = reader.Parameter;
                         break;
                     case RTFConsts._result :
-                        // ¶ÁÈ¡¶ÔÏóÔËËã½á¹ûÊý¾Ý
+                        // ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                         RTFDomElementContainer result = new RTFDomElementContainer();
                         result.Name = RTFConsts._result;
                         obj.AppendChild(result);
@@ -4032,7 +4032,8 @@ namespace RtfDomParser
             builder.Append( Environment.NewLine + "   ColorTable(" + myColorTable.Count + ")");
             for (int iCount = 0; iCount < myColorTable.Count; iCount ++ )
             {
-                System.Drawing.Color c = myColorTable[iCount];
+                Color ic = myColorTable[iCount];
+                var c = ic.Extract();
                 builder.Append(Environment.NewLine + "      " + iCount + ":" + c.R + " " + c.G + " " + c.B );
             }
             builder.Append(Environment.NewLine + "   FontTable(" + myFontTable.Count + ")");
