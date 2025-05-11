@@ -2249,7 +2249,7 @@ namespace RtfDomParser
                                     }
                                     format.FontName = FontName;
                                 }
-                                myFontChartset = this.FontTable[reader.Parameter].Encoding;
+                                myFontChartset = this.FontTable[reader.Parameter]?.Encoding;
                                 break;
                             }
                         case RTFConsts._af:
