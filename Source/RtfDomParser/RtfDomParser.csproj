@@ -8,7 +8,7 @@
 		<Authors>Nikolay.IT, yuan yong fu, Brian Berns</Authors>
 		<Company />
 		<Description>RtfDomParser (a.k.a. DCSoft.RTF and XDesigner.RTF) is an open source C# library for parsing RTF documents and generating RTF DOM Tree. This version supports .NET Core.</Description>
-		<Version>1.0.3</Version>
+		<Version>1.0.4</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
